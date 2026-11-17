@@ -1,0 +1,16 @@
+{
+  "name": "rino-template",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate": "node generate.js",
+    "backoffice": "node backoffice.js"
+  },
+  "dependencies": {
+    "rinojs": "^3.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2"
+  }
+}
