@@ -15,12 +15,16 @@ export default {
             width: "320px",
             height: "360px",
             position: "bottom-right",
-            offset: "16px",
+            offset: "0px",
             margin: "0px",
             fixed: true,
             zIndex: 2147483600,
             borderRadius: "14px",
             boxShadow: "0 8px 24px rgb(15 23 42 / 18%)",
+            movable: true,
+            minimizable: true,
+            resettable: true,
+            resizable: true,
             closable: true,
             launcher: {
                 enabled: true,
@@ -36,14 +40,14 @@ export default {
                 "activity.html": {
                     width: "330px",
                     height: "340px",
-                    position: "top-right",
+                    position: "top-center",
                     borderRadius: "20px",
                     enabled: true
                 },
                 "overview.html": {
                     width: "300px",
                     height: "360px",
-                    position: "bottom-left",
+                    position: "bottom-center",
                     borderRadius: "8px",
                     enabled: true
                 },

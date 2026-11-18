@@ -49,9 +49,15 @@ pages/
   inserted/*.html            Pages inserted into websites
 scripts/export/
   popup/index.js             Popup behavior
-  onload/index.js            Panel and launcher controller
+  onload/rino-panel.js       Bundled panel entry point
   onclick/index.js           Optional active-tab script (disabled by default)
   inserted/index.js          Example inserted-page behavior
+scripts/rino-panel/
+  index.js                   Internal panel initialization
+  panel*.js                  Panel layout, controls, drag and resize modules
+  launcher*.js               Launcher behavior and Shadow DOM styles
+  storage.js                 Persisted panel state operations
+  synchronization.js         Cross-tab and visibility synchronization
 styles/export/
   popup/index.css            Popup styles
   inserted/index.css         Example inserted-page styles
@@ -102,6 +108,10 @@ extension: {
     zIndex: 2147483600,
     borderRadius: "14px",
     boxShadow: "0 8px 24px rgb(15 23 42 / 18%)",
+    movable: true,
+    minimizable: true,
+    resettable: true,
+    resizable: true,
     closable: true,
 
     launcher: {
@@ -135,7 +145,7 @@ extension: {
 ### Available panel settings
 
 - `width`, `height`: outer iframe panel dimensions.
-- `position`: `top-left`, `top-right`, `bottom-left`, `bottom-right`, or `center`.
+- `position`: `top-left`, `top-center`, `top-right`, `center-left`, `center-center`, `center-right`, `bottom-left`, `bottom-center`, or `bottom-right`. The older `center` value remains an alias for `center-center`.
 - `offset`: fallback distance from both window axes.
 - `offsetX`: optional left/right distance override.
 - `offsetY`: optional top/bottom distance override.
@@ -144,6 +154,10 @@ extension: {
 - `zIndex`: outer panel stacking level.
 - `borderRadius`: outer clipping radius.
 - `boxShadow`: outer CSS shadow; use `"none"` to disable it.
+- `movable`: when `false`, the drag control is hidden.
+- `minimizable`: when `false`, the minimize control is hidden and saved minimized state is ignored.
+- `resettable`: when `false`, the reset-position control is hidden.
+- `resizable`: when `false`, edge and corner resizing is disabled.
 - `closable`: when `false`, the close control is hidden and saved closed state is ignored.
 - `enabled`: when `false`, the page remains in the build but is not inserted or listed.
 
@@ -158,6 +172,11 @@ The floating launcher lists all enabled inserted pages.
 - A plus means the panel is closed; clicking reopens it.
 - Non-closable panels remain disabled with a green status dot.
 - Closed state is stored in `storage.local` and synchronized across open tabs.
+- Each panel has a CSS-drawn move control in its top-left corner. Drag that control to place the panel anywhere in the viewport; the exact position is saved and synchronized across existing and new tabs.
+- The adjacent minimize control collapses the panel to its control bar and restores it when clicked again. Minimized state is also synchronized across tabs.
+- The CSS-drawn circular-arrow control clears the panel's saved position and size, returning it to its configured placement across tabs.
+- Drag any panel edge or corner to resize it like a desktop window. Its dimensions and adjusted position are saved and synchronized across tabs.
+- Returning to a browser tab refreshes its panel state immediately, including position, minimized state, and open/closed state.
 - The popup's **Restore inserted panels** button reopens all closable panels.
 
 Set `launcher.enabled` to `false` to remove the floating launcher. Its `size`, `position`, `offset`, `offsetX`, `offsetY`, `margin`, `borderRadius`, `menuWidth`, and `menuMaxHeight` values are configurable.

@@ -15,7 +15,7 @@
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
-      "js": ["inserted-pages.js", "scripts/onload/index.js"],
+      "js": ["inserted-pages.js", "scripts/onload/rino-panel.js"],
       "run_at": "document_idle"
     }
   ],
